@@ -22,7 +22,7 @@ export default function ProductsForSale(){
             <Header>
                 <HeaderContent>
                     <img src={Logo} alt="Logotipo" />
-                    <img src={Cart} alt="Carrinho-de-compras" />
+                    <ion-icon name="cart-outline"></ion-icon>
                 </HeaderContent>
             </Header>
 
@@ -77,6 +77,10 @@ const HeaderContent = styled.header`
     img{
         width: 30px;
         height: 30px;
+    }
+
+    ion-icon{
+        font-size: 30px;
     }
 `;
 
