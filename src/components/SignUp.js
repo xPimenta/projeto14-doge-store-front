@@ -37,7 +37,7 @@ export default function SignUp(){
             console.log(e)
         })
         promise.then(() => {
-            navigate("/login")
+            navigate("/")
         })
         
     }
