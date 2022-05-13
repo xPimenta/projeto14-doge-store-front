@@ -3,6 +3,8 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
+import Logo1 from "../dogecoin-miner-game.png"
+
 export default function Login(){
 
     const URL = `${process.env.REACT_APP_API_URL}/sign-in`
@@ -11,6 +13,7 @@ export default function Login(){
     const [userLogin, setUserLogin] = useState({email: "", password: ""})
     return(
         <LoginPage>
+            <img src={Logo1} alt="Logotipo" />
             <Logo>Doge Store</Logo>
             <form onSubmit={acessAccount}>
                 <input onChange={(e) => setUserLogin({...userLogin, email: e.target.value})} placeholder="E-mail" type="email"/>
@@ -67,7 +70,7 @@ const SubmitButton = styled.input`
 `
 
 const Logo = styled.h1`
-    font-family: 'Saira Stencil One', cursive;
+    font-family: 'Josefin Sans', sans-serif;
     font-size: 32px;
     margin-bottom: 24px;
 `
