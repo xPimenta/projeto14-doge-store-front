@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import GlobalStyle from "./GlobalStyles"
+import dotenv from "dotenv"
 
 import SignUp from "./SignUp"
 import Login from "./Login"
-// import Menu from "./Menu"
 import ProductsForSale from "./ProductsForSale";
+import Card from "./Card";
 
 
 export default function App(){
@@ -14,8 +15,8 @@ export default function App(){
             <Routes>
                 <Route path="/" element={<SignUp/>}/>
                 <Route path="/login" element={<Login/>}/>
-                {/* <Route path="/menu" element={<Menu/>}/> */}
                 <Route path="/showcase" element={<ProductsForSale/>}/>
+                <Route path="/exclusive/:idCard" element={<Card />} />
             </Routes>
         </BrowserRouter>
     )

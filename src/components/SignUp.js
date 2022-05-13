@@ -4,11 +4,14 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SignUp(){
+
+    const URL = `${process.env.REACT_APP_API_URL}/sign-up`
+
     const navigate = useNavigate()
     const [userSignUp, setUserSignUp] = useState({name: "", email: "", password: "", repeatPassword: "" })
     return(
         <SignUpPage>
-            <Logo>MyWallet</Logo>
+            <Logo>Doge Store</Logo>
             <form onSubmit={createAccount}>
                 <input onChange={(e) => setUserSignUp({...userSignUp, name: e.target.value})} type="text" placeholder="Nome"/>
                 <input onChange={(e) => setUserSignUp({...userSignUp, email: e.target.value})} type="email" placeholder="Email"/>
@@ -22,7 +25,7 @@ export default function SignUp(){
 
     function createAccount(e){
         e.preventDefault()
-        const promise = axios.post("http://localhost:5000/sign-up", userSignUp)
+        const promise = axios.post(URL, userSignUp)
         promise.catch((e) => {
             alert("Preencha corretamente!")
             console.log(e)

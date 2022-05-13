@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         font-family: Raleway;
         box-sizing: border-box;
-        background-color: #8c11be;
+        background-color: #f5f5f5;
     }
     a {
         text-decoration: none;
@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
         height: 58px;
         border-radius: 5px;
     }
+
 `
 
 export default GlobalStyle

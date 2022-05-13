@@ -4,11 +4,14 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Login(){
+
+    const URL = `${process.env.REACT_APP_API_URL}/sign-in`
+
     const navigate = useNavigate()
     const [userLogin, setUserLogin] = useState({email: "", password: ""})
     return(
         <LoginPage>
-            <Logo>MyWallet</Logo>
+            <Logo>Doge Store</Logo>
             <form onSubmit={acessAccount}>
                 <input onChange={(e) => setUserLogin({...userLogin, email: e.target.value})} placeholder="E-mail" type="email"/>
                 <input onChange={(e) => setUserLogin({...userLogin, password: e.target.value})} placeholder="Senha" type="password"/>
@@ -20,7 +23,7 @@ export default function Login(){
     
     function acessAccount(e){
         e.preventDefault()
-        const promise = axios.post("http://localhost:5000/sign-in", userLogin)
+        const promise = axios.post(URL, userLogin)
         promise.catch((e) => {
             alert("Preencha corretamente!")
             console.log(e)
@@ -28,7 +31,7 @@ export default function Login(){
         promise.then((response) => {
             localStorage.setItem("token", response.data[0])
             localStorage.setItem("name", response.data[1])
-            navigate("/menu")
+            navigate("/showcase")
         })
     }
 }
