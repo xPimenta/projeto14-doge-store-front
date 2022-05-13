@@ -13,8 +13,8 @@ export default function App(){
         <BrowserRouter>
         <GlobalStyle/>
             <Routes>
-                <Route path="/" element={<SignUp/>}/>
-                <Route path="/login" element={<Login/>}/>
+                <Route path="/sign-up" element={<SignUp/>}/>
+                <Route path="/" element={<Login/>}/>
                 <Route path="/showcase" element={<ProductsForSale/>}/>
                 <Route path="/exclusive/:idCard" element={<Card />} />
             </Routes>

@@ -7,7 +7,7 @@ import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
 
 export default function ProductsForSale() {
-    
+
   const URL = `${process.env.REACT_APP_API_URL}/products`;
 
   const [products, setProducts] = useState([]);
@@ -74,7 +74,7 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 
-  background-color: #a328d6;
+  background-color:#E15FED;
 
   img {
     width: 30px;
