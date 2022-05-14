@@ -11,7 +11,7 @@ export default function Card() {
   const { idCard } = useParams();
   const URL = `${process.env.REACT_APP_API_URL}/card/${idCard}`;
 
-  const [card, setCard] = useState({});
+  const [card, setCard] = useState([]);
 
   useEffect(() => {
     const promise = axios.get(URL);
@@ -38,7 +38,7 @@ export default function Card() {
             <img src={card.picture} alt={card.description} />
                             <h5>{card.description}</h5>
                             <span>{card.price}</span>
-            <img src={Logo} alt="doidera" />
+            {/* <img src={Logo} alt="doidera" /> */}
             {/* <h5>doidera xD</h5>
             <h6>$999</h6> */}
             <Button><div><button class="btn btn--light"><span class="btn__inner"><span class="btn__slide"></span>
@@ -126,7 +126,6 @@ const BoxItem = styled.div`
   h5 {
     font-size: 25px;
     text-align: center;
-    margin-bottom: -30px;
   }
 
   h6 {
@@ -136,7 +135,7 @@ const BoxItem = styled.div`
   }
 
   span {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-size: 25px;
     font-weight: bold;
   }
