@@ -17,6 +17,7 @@ export default function App(){
                 <Route path="/" element={<Login/>}/>
                 <Route path="/showcase" element={<ProductsForSale/>}/>
                 <Route path="/showcase/:idCard" element={<Card />} />
+                <Route path="/" element={<Card />} />
             </Routes>
         </BrowserRouter>
     )

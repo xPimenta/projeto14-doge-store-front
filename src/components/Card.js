@@ -7,7 +7,6 @@ import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
 
 export default function Card() {
-  
   const { idCard } = useParams();
   const URL = `${process.env.REACT_APP_API_URL}/card/${idCard}`;
 
@@ -18,10 +17,14 @@ export default function Card() {
 
     promise.then((response) => {
       setCard(response.data);
-      console.log(response)
+      console.log(response);
     });
     promise.catch((error) => console.log(error));
   }, []);
+
+  function handleClick(card) {
+    console.log(card)
+  }
 
   return (
     <ShowcasePage>
@@ -36,23 +39,24 @@ export default function Card() {
         <>
           <BoxItem>
             <img src={card.picture} alt={card.description} />
-                            <h5>{card.description}</h5>
-                            <span>{card.price}</span>
-            {/* <img src={Logo} alt="doidera" /> */}
-            {/* <h5>doidera xD</h5>
-            <h6>$999</h6> */}
-            <Button><div><button class="btn btn--light"><span class="btn__inner"><span class="btn__slide"></span>
-            <span class="btn__content">Adicionar ao carrinho</span></span></button></div></Button>
+            <h5>{card.description}</h5>
+            <span>{card.price}</span>
+            <Button onClick={() => handleClick(card)}>
+              <div>
+                <button class="btn btn--light">
+                  <span class="btn__inner">
+                    <span class="btn__slide"></span>
+                    <span class="btn__content">Adicionar ao carrinho</span>
+                  </span>
+                </button>
+              </div>
+            </Button>
           </BoxItem>
         </>
       </Panel>
     </ShowcasePage>
   );
 }
-
-
-
-
 
 /* ------------------- Estilização ------------------- */
 const ShowcasePage = styled.div`
@@ -69,7 +73,7 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 
-  background-color: #E15FED;
+  background-color: #e15fed;
 
   img {
     width: 30px;
@@ -144,134 +148,138 @@ const BoxItem = styled.div`
 /* ------------------- BUTTON ------------------- */
 const Button = styled.div`
   .btn {
-  --background-color: #0f1923;
-  /* Clean style */
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  border: none;
-  background: none;
-  color: var(--button-text-color);
-  cursor: pointer;
-  /* Clean style */
-  
-  --button-text-color: var(--background-color);
-  --button-text-color-hover: var(--button-background-color);
-  --border-color: #7D8082;
-  --button-background-color: #ece8e1;
-  --highlight-color: #ff4655;
-  --button-inner-border-color: transparent;
-  --button-bits-color: var(--background-color);
-  --button-bits-color-hover: var(--button-background-color);
-  
-  position: relative;
-  padding: 8px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 14px;
-  transition: all .15s ease;
-}
+    --background-color: #0f1923;
+    /* Clean style */
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: var(--button-text-color);
+    cursor: pointer;
+    /* Clean style */
 
-.btn::before,
-.btn::after {
-  content: '';
-  margin-bottom: 10px;
+    --button-text-color: var(--background-color);
+    --button-text-color-hover: var(--button-background-color);
+    --border-color: #7d8082;
+    --button-background-color: #ece8e1;
+    --highlight-color: #ff4655;
+    --button-inner-border-color: transparent;
+    --button-bits-color: var(--background-color);
+    --button-bits-color-hover: var(--button-background-color);
 
-  display: block;
-  position: absolute;
-  right: 0; left: 0;
-  height: calc(50% - 5px);
-  border: 1px solid var(--border-color);
-  transition: all .15s ease;
-}
+    position: relative;
+    padding: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.15s ease;
+  }
 
-.btn::before {
-  top: 0;
-  border-bottom-width: 0;
-}
+  .btn::before,
+  .btn::after {
+    content: "";
+    margin-bottom: 10px;
 
-.btn::after {
-  bottom: 0;
-  border-top-width: 0;
-}
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid var(--border-color);
+    transition: all 0.15s ease;
+  }
 
-.btn:active,
-.btn:focus {
-  outline: none;
-}
+  .btn::before {
+    top: 0;
+    border-bottom-width: 0;
+  }
 
-.btn:active::before,
-.btn:active::after {
-  right: 3px;
-  left: 3px;
-}
+  .btn::after {
+    bottom: 0;
+    border-top-width: 0;
+  }
 
-.btn:active::before {
-  top: 3px;
-}
+  .btn:active,
+  .btn:focus {
+    outline: none;
+  }
 
-.btn:active::after {
-  bottom: 3px;
-}
+  .btn:active::before,
+  .btn:active::after {
+    right: 3px;
+    left: 3px;
+  }
 
-.btn__inner {
-  position: relative;
-  display: block;
-  padding: 20px 20px;
-  background-color: var(--button-background-color);
-  overflow: hidden;
-  box-shadow: inset 0px 0px 0px 1px var(--button-inner-border-color);
-}
+  .btn:active::before {
+    top: 3px;
+  }
 
-.btn__inner::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0; left: 0;
-  background-color: var(--button-bits-color);
-}
+  .btn:active::after {
+    bottom: 3px;
+  }
 
-.btn__inner::after {
-  content: '';
-  display: block;
-  position: absolute;
-  right: 0; bottom: 0;
-  background-color: var(--button-bits-color);
-  transition: all .2s ease;
-}
+  .btn__inner {
+    position: relative;
+    display: block;
+    padding: 20px 20px;
+    background-color: var(--button-background-color);
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 1px var(--button-inner-border-color);
+  }
 
-.btn__slide {
-  display: block;
-  position: absolute;
-  top: 0; bottom: -5px; left: -8px;
-  width: 0;
-  background-color: #E15FED;
-  transform: skew(-15deg);
-  transition: all .2s ease;
-}
+  .btn__inner::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--button-bits-color);
+  }
 
-.btn__content {
-  position: relative;
-}
+  .btn__inner::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: var(--button-bits-color);
+    transition: all 0.2s ease;
+  }
 
-.btn:hover {
-  color: var(--button-text-color-hover);
-}
+  .btn__slide {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -5px;
+    left: -8px;
+    width: 0;
+    background-color: #e15fed;
+    transform: skew(-15deg);
+    transition: all 0.2s ease;
+  }
 
-.btn:hover .btn__slide {
-  width: calc(100% + 15px);
-}
+  .btn__content {
+    position: relative;
+  }
 
-.btn:hover .btn__inner::after {
-  background-color: var(--button-bits-color-hover);
-}
+  .btn:hover {
+    color: var(--button-text-color-hover);
+  }
 
-.btn--light {
-  --button-background-color: var(--background-color);
-  --button-text-color: #E15FED;
-  --button-inner-border-color: #E15FED;
-  --button-text-color-hover: #ece8e1;
-  /* --button-bits-color-hover: #ece8e1; */
-}
+  .btn:hover .btn__slide {
+    width: calc(100% + 15px);
+  }
 
+  .btn:hover .btn__inner::after {
+    background-color: var(--button-bits-color-hover);
+  }
+
+  .btn--light {
+    --button-background-color: var(--background-color);
+    --button-text-color: #e15fed;
+    --button-inner-border-color: #e15fed;
+    --button-text-color-hover: #ece8e1;
+    /* --button-bits-color-hover: #ece8e1; */
+  }
 `;
