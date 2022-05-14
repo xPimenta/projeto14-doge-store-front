@@ -7,19 +7,20 @@ import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
 
 export default function Card() {
+  
   const { idCard } = useParams();
-  const URL = `${process.env.REACT_APP_API_URL}/exclusive/${idCard}`;
+  const URL = `${process.env.REACT_APP_API_URL}/card/${idCard}`;
 
-  const [card, setCard] = useState([]);
+  const [card, setCard] = useState({});
 
   useEffect(() => {
     const promise = axios.get(URL);
 
     promise.then((response) => {
       setCard(response.data);
-      console.log(response.data);
+      console.log(response)
     });
-    promise.catch((error) => console.log(error.response.status));
+    promise.catch((error) => console.log(error));
   }, []);
 
   return (
@@ -34,12 +35,12 @@ export default function Card() {
       <Panel>
         <>
           <BoxItem>
-            {/* <img src={card.picture} alt={card.description} />
+            <img src={card.picture} alt={card.description} />
                             <h5>{card.description}</h5>
-                            <span>{card.price}</span> */}
+                            <span>{card.price}</span>
             <img src={Logo} alt="doidera" />
-            <h5>doidera xD</h5>
-            <h6>$999</h6>
+            {/* <h5>doidera xD</h5>
+            <h6>$999</h6> */}
             <Button><div><button class="btn btn--light"><span class="btn__inner"><span class="btn__slide"></span>
             <span class="btn__content">Adicionar ao carrinho</span></span></button></div></Button>
           </BoxItem>

@@ -3,7 +3,7 @@ import { React, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import Cart from "../shopping-cart.png";
+// import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
 
 export default function ProductsForSale() {
@@ -11,7 +11,7 @@ export default function ProductsForSale() {
   const URL = `${process.env.REACT_APP_API_URL}/products`;
 
   const [products, setProducts] = useState([]);
-
+    
   useEffect(() => {
     const promise = axios.get(URL);
 
@@ -23,9 +23,9 @@ export default function ProductsForSale() {
 
   const navigate = useNavigate();
 
-  function handleClick(e) {
-    navigate(`/exclusive/1`);
-    // navigate(`/exclusive/${e.description}`);
+  function handleClick(card) {
+    navigate(`/showcase/${card.id}`);
+    console.log(card)
   }
 
   return (
@@ -38,21 +38,22 @@ export default function ProductsForSale() {
       </Header>
 
       <Panel>
-        {/* {products.map(e => (
+        {products.map(card => (
                     <>
-                        {e.isAvailable === true && (
-                            <BoxItem key={e.description} onClick={(e) => handleClick(e)}>
-                                <img src={e.picture} alt={e.description} />
-                                <h5>{e.description}</h5>
-                                <span>{e.price}</span>
+                        {card.isAvailable === true && (
+                            <BoxItem key={card.id} onClick={() => handleClick(card)}>
+                                <img src={card.picture} alt={card.description} />
+                                <h5>{card.description}</h5>
+                                <h5>{card.id}</h5>
+                                <span>{card.price}</span>
                             </BoxItem>
                         )}
                     </>
-                ))} */}
-
+                ))}
+{/* 
                          <BoxItem onClick={(e) => handleClick(e)}>
                             <img src={Logo} alt="doidera" />
-                         </BoxItem>
+                         </BoxItem> */}
 
 
       </Panel>

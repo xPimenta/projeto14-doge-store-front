@@ -65,11 +65,11 @@ const SignUpPage = styled.div`
     }
 `
 
-const SubmitButton = styled.input`
-    background-color: #A328D6;
-    color: #ffffff;
-    font-weight: 700;
-`
+// const SubmitButton = styled.input`
+//     background-color: #A328D6;
+//     color: #ffffff;
+//     font-weight: 700;
+// `
 
 const Logo = styled.h1`
     font-size: 32px;
