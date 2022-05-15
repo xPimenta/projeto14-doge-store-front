@@ -3,10 +3,9 @@ import { React, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
 
-export default function Checkout() {
+export default function Cart() {
   const URLCart = `${process.env.REACT_APP_API_URL}/cart-get`;
   const URLCardsOwned = `${process.env.REACT_APP_API_URL}/cart-owned`;
 
@@ -25,6 +24,7 @@ export default function Checkout() {
     });
     promise.then((response) => {
       setCardsOwned(response.data);
+      console.log("cardsOwned", response.data);
     });
     promise.catch((error) => console.log(error));
   }, []);
@@ -39,6 +39,7 @@ export default function Checkout() {
     });
     promise.then((response) => {
       setCartItems(response.data);
+      console.log("cartItems", response.data);
     });
     promise.catch((error) => console.log(error));
   }, []);
@@ -47,23 +48,27 @@ export default function Checkout() {
   let navigate = useNavigate();
 
   function selectCard(card) {
-    setSelectedCards({...selectedCards, card});
+    setSelectedCards([...selectedCards, card]);
   }
 
   // BUY SELECTED CARDS  
   function comprarCards() {
+
+    selectedCards.forEach(card => {
     const URLBuyCards = `${process.env.REACT_APP_API_URL}/cart-buy`;
     const promise = axios.post(URLBuyCards, {
       user: localStorage.name,
-      cards: selectedCards,
+      cards: card,
     });
     promise.catch((e) => {
       alert("Algo deu errado");
       console.log(e);
     });
     promise.then(() => {
-      alert("Compra realizada com sucesso");
+      console.log("Compra realizada com sucesso");
     });
+  });
+
   }
 
   return (
