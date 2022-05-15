@@ -79,7 +79,12 @@ const Header = styled.header`
   img {
     width: 30px;
     height: 30px;
+
+  border-radius: 10px;
   }
+
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 `;
 
 const HeaderContent = styled.header`
@@ -122,18 +127,29 @@ const BoxItem = styled.div`
   /* height: 210px; */
 
   margin: 0 auto;
-  padding: 0 5px;
+  padding: 0 0px;
+  padding-top: 20px;
+
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
+  &:hover {
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+  }
+
   h5 {
+      margin-top: 20px;
     font-size: 17px;
     text-align: center;
+    margin-bottom: -10px;
   }
 
   span {
+      margin-top:25px;
     margin-bottom: 10px;
     font-size: 17px;
   }

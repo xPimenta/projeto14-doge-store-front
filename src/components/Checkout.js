@@ -6,35 +6,64 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
 
-export default function Card() {
-  const { idCard } = useParams();
-  const URL = `${process.env.REACT_APP_API_URL}/card/${idCard}`;
+export default function Checkout() {
+  const URLCart = `${process.env.REACT_APP_API_URL}/cart-get`;
+  const URLCardsOwned = `${process.env.REACT_APP_API_URL}/cart-owned`;
 
-  const [card, setCard] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [cardsOwned, setCardsOwned] = useState([]);
+  const [selectedCards, setSelectedCards] = useState([]);
+  console.log(selectedCards);
 
-  useEffect(() => {
-    const promise = axios.get(URL);
-
+   // GET ITEMS OWNED
+   useEffect(() => {
+    console.log(localStorage.name);
+    const promise = axios.get(URLCardsOwned, {
+      params: {
+        user: localStorage.name,
+      },
+    });
     promise.then((response) => {
-      setCard(response.data);
+      setCardsOwned(response.data);
     });
     promise.catch((error) => console.log(error));
   }, []);
 
+  // GET ITEMS IN CART
+  useEffect(() => {
+    console.log(localStorage.name);
+    const promise = axios.get(URLCart, {
+      params: {
+        user: localStorage.name,
+      },
+    });
+    promise.then((response) => {
+      setCartItems(response.data);
+    });
+    promise.catch((error) => console.log(error));
+  }, []);
+
+
   let navigate = useNavigate();
 
-  function handleClick(card) {
-    const URLCartPost = `${process.env.REACT_APP_API_URL}/cart-post`;
-    const promise = axios.post(URLCartPost, { user: localStorage.name, card: card });
-        promise.catch((e) => {
-            alert("Algo deu errado")
-            console.log(e)
-        })
-        promise.then(() => {
-            navigate("/cart")
-        })
-    // console.log(localStorage.name)
-    // console.log(card)
+  function selectCard(card) {
+    setSelectedCards({...selectedCards, card});
+  }
+
+  // BUY SELECTED CARDS  
+  function comprarCards() {
+    const URLBuyCards = `${process.env.REACT_APP_API_URL}/cart-buy`;
+    const promise = axios.post(URLBuyCards, {
+      user: localStorage.name,
+      cards: selectedCards,
+    });
+    promise.catch((e) => {
+      alert("Algo deu errado");
+      console.log(e);
+    });
+    promise.then(() => {
+      alert("Compra realizada com sucesso");
+    });
   }
 
   return (
@@ -42,28 +71,55 @@ export default function Card() {
       <Header>
         <HeaderContent>
           <img src={Logo} alt="Logotipo" />
-          <ion-icon name="cart-outline"></ion-icon>
+          <ion-icon name="cart-outline" link></ion-icon>
         </HeaderContent>
       </Header>
 
       <Panel>
-        <>
-          <BoxItem>
-            <img src={card.picture} alt={card.description} />
-            <h5>{card.description}</h5>
-            <span>{card.price}</span>
-            <Button onClick={() => handleClick(card)}>
-              <div>
-                <button class="btn btn--light">
-                  <span class="btn__inner">
-                    <span class="btn__slide"></span>
-                    <span class="btn__content">Adicionar ao carrinho</span>
-                  </span>
-                </button>
-              </div>
-            </Button>
-          </BoxItem>
-        </>
+        <h1> Seus NFTs </h1>
+        <CardsOwned>
+          {cardsOwned.map((card) => (
+            <>
+              {card.isAvailable === true && (
+                <BoxItem>
+                  <img src={card.picture} alt={card.description} />
+                  <h5>{card.description}</h5>
+                  <h5>{card.id}</h5>
+                  <span>{card.price}</span>
+                </BoxItem>
+              )}
+            </>
+          ))}
+        </CardsOwned>
+        <h1> Carrinho de compras </h1>
+        <CartList>
+          {cartItems.map((card) => (
+            <>
+              {card.isAvailable === true && (
+                <BoxItem onClick={(e) => selectCard(card)}>
+                  <img src={card.picture} alt={card.description} />
+                  <h5>{card.description}</h5>
+                  <h5>{card.id}</h5>
+                  <span>{card.price}</span>
+                </BoxItem>
+              )}
+            </>
+          ))}
+        </CartList>
+        <Button onClick={() => comprarCards()}>
+          <div>
+            <button class="btn btn--light">
+              <span class="btn__inner">
+                <span class="btn__slide"></span>
+                <span class="btn__content">Comprar Cards Selecionados</span>
+              </span>
+            </button>
+          </div>
+        </Button>
+        {/* 
+                         <BoxItem onClick={(e) => handleClick(e)}>
+                            <img src={Logo} alt="doidera" />
+                         </BoxItem> */}
       </Panel>
     </ShowcasePage>
   );
@@ -78,7 +134,6 @@ const ShowcasePage = styled.div`
 const Header = styled.header`
   width: 100%;
   height: 50px;
-  margin-bottom: 70px;
 
   display: flex;
   justify-content: center;
@@ -89,7 +144,12 @@ const Header = styled.header`
   img {
     width: 30px;
     height: 30px;
+
+    border-radius: 10px;
   }
+
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 `;
 
 const HeaderContent = styled.header`
@@ -116,43 +176,86 @@ const Panel = styled.main`
   margin-top: 20px;
 
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 
   gap: 30px 20px;
 
   img {
-    width: 350px;
-    height: 350px;
+    width: 100px;
+    height: 100px;
   }
 `;
 
 const BoxItem = styled.div`
   /* background-color: hotpink; */
-  width: 500px;
+  width: 150px;
   /* height: 210px; */
 
   margin: 0 auto;
-  padding: 0 5px;
+  padding: 0 0px;
+  padding-top: 20px;
+
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
   h5 {
-    font-size: 25px;
+    margin-top: 20px;
+    font-size: 17px;
     text-align: center;
-  }
-
-  h6 {
-    font-size: 25px;
-    text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: -10px;
   }
 
   span {
-    margin-bottom: 20px;
-    font-size: 25px;
-    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+
+  &:hover {
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    box-shadow: 3px 3px 25px rgba(0, 0, 0, 0.5);
+  }
+`;
+
+const CardsOwned = styled.div`
+  margin: 0 auto;
+  margin-top: -20px;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 30px 20px;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+`;
+
+const CartList = styled.div`
+  margin: 0 auto;
+  margin-top: -20px;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 30px 20px;
+
+  img {
+    width: 100px;
+    height: 100px;
   }
 `;
 

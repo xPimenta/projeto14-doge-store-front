@@ -6,7 +6,7 @@ import SignUp from "./SignUp"
 import Login from "./Login"
 import ProductsForSale from "./ProductsForSale";
 import Card from "./Card";
-import Cart from "./Cart";
+import Checkout from "./Checkout";
 
 
 export default function App(){
@@ -18,9 +18,11 @@ export default function App(){
                 <Route path="/" element={<Login/>}/>
                 <Route path="/showcase" element={<ProductsForSale/>}/>
                 <Route path="/showcase/:idCard" element={<Card />} />
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<Checkout />} />
             </Routes>
         </BrowserRouter>
     )
 }
+
+
 
