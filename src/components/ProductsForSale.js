@@ -25,7 +25,6 @@ export default function ProductsForSale() {
 
   function handleClick(card) {
     navigate(`/showcase/${card.id}`);
-    console.log(card)
   }
 
   return (

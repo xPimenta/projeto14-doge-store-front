@@ -17,13 +17,24 @@ export default function Card() {
 
     promise.then((response) => {
       setCard(response.data);
-      console.log(response);
     });
     promise.catch((error) => console.log(error));
   }, []);
 
+  let navigate = useNavigate();
+
   function handleClick(card) {
-    console.log(card)
+    const URLCartPost = `${process.env.REACT_APP_API_URL}/cart-post`;
+    const promise = axios.post(URLCartPost, { user: localStorage.name, card: card });
+        promise.catch((e) => {
+            alert("Preencha corretamente!")
+            console.log(e)
+        })
+        promise.then(() => {
+            navigate("/cart")
+        })
+    // console.log(localStorage.name)
+    // console.log(card)
   }
 
   return (

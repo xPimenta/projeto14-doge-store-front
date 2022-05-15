@@ -35,7 +35,6 @@ export default function Login(){
         })
         promise.then((response) => {
             localStorage.setItem("token", response.data[0])
-            console.log(response)
             localStorage.setItem("name", response.data[1])
             navigate("/showcase")
         })
