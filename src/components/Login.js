@@ -7,7 +7,7 @@ import Logo1 from "../dogecoin-miner-game.png"
 
 export default function Login(){
 
-    const URL = `http://localhost:5100/sign-in`
+    const URL = `https://git.heroku.com/doge-store.git/sign-in`
 
     const navigate = useNavigate()
     const [userLogin, setUserLogin] = useState({email: "", password: ""})

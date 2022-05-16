@@ -36,7 +36,7 @@ export default function Checkout(){
             return;
         }
 
-        const promise = axios.post(`http://localhost:5100/checkout`, {
+        const promise = axios.post(`https://git.heroku.com/doge-store.git/checkout`, {
             email,
             cpf,
             address,
