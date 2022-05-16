@@ -13,15 +13,20 @@ export default function Cart() {
   const [cardsOwned, setCardsOwned] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   console.log(selectedCards);
-  
+
+  const token = localStorage.getItem("token")
+  console.log(token)
+  if (!token) {
+    navigate("/sign-in")
+  }
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
 
    // GET ITEMS OWNED
    useEffect(() => {
-    const promise = axios.get(URLCardsOwned, {
-      params: {
-        localToken: localStorage.token,
-      },
-    });
+    const promise = axios.get(URLCardsOwned, config);
     promise.then((response) => {
       setCardsOwned(response.data);
     });
@@ -30,11 +35,7 @@ export default function Cart() {
 
   // GET ITEMS IN CART
   useEffect(() => {
-    const promise = axios.get(URLCart, {
-      params: {
-        localToken: localStorage.token,
-      },
-    });
+    const promise = axios.get(URLCart, config);
     promise.then((response) => {
       setCartItems(response.data);
     });
@@ -45,7 +46,11 @@ export default function Cart() {
   let navigate = useNavigate();
 
   function selectCard(card) {
+    if(selectedCards.includes(card)) {
+      console.log("already selected")
+    } else {
     setSelectedCards([...selectedCards, card]);
+    }
   }
 
   // BUY SELECTED CARDS  
@@ -53,10 +58,7 @@ export default function Cart() {
 
     selectedCards.forEach(card => {
     const URLBuyCards = `${process.env.REACT_APP_API_URL}/cart-buy`;
-    const promise = axios.post(URLBuyCards, {
-      localToken: localStorage.token,
-      cards: card,
-    });
+    const promise = axios.post(URLBuyCards, {cards: card}, config);
     promise.catch((e) => {
       alert("Algo deu errado");
       console.log(e);
@@ -73,7 +75,8 @@ export default function Cart() {
       <Header>
         <HeaderContent>
           <img src={Logo} alt="Logotipo" />
-          <ion-icon name="cart-outline" link></ion-icon>
+          <Link to="/showcase"><h2> DOGE STORE </h2></Link>
+          <Link to="/cart"><ion-icon name="cart-outline" link></ion-icon></Link>
         </HeaderContent>
       </Header>
 
@@ -95,18 +98,20 @@ export default function Cart() {
         </CardsOwned>
         <h1> Carrinho de compras </h1>
         <CartList>
-          {cartItems.map((card) => (
+          {cartItems.map((card) => {
+            const selectColor = selectedCards.find(selectedCard => selectedCard.id === card.id)
+            console.log(selectColor, !!selectColor)
+
+            return (
             <>
-              {card.isAvailable === true && (
-                <BoxItem onClick={(e) => selectCard(card)}>
+                <BoxItem selected={!!selectColor} onClick={(e) => selectCard(card)}>
                   <img src={card.picture} alt={card.description} />
                   <h5>{card.description}</h5>
                   <h5>{card.id}</h5>
                   <span>{card.price}</span>
                 </BoxItem>
-              )}
             </>
-          ))}
+          )})}
         </CartList>
         <Button onClick={() => comprarCards()}>
           <div>
@@ -118,16 +123,14 @@ export default function Cart() {
             </button>
           </div>
         </Button>
-        {/* 
-                         <BoxItem onClick={(e) => handleClick(e)}>
-                            <img src={Logo} alt="doidera" />
-                         </BoxItem> */}
       </Panel>
     </ShowcasePage>
   );
 }
 
 /* ------------------- Estilização ------------------- */
+
+
 const ShowcasePage = styled.div`
   width: 100%;
   padding-bottom: 50px;
@@ -158,15 +161,18 @@ const HeaderContent = styled.header`
   width: 95%;
 
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 
   img {
     width: 30px;
     height: 30px;
+    margin-top: 16px;
   }
 
   ion-icon {
     font-size: 30px;
+    margin-top: 16px;
   }
 `;
 
@@ -199,9 +205,13 @@ const BoxItem = styled.div`
   margin: 0 auto;
   padding: 0 0px;
   padding-top: 20px;
+  color: ${props => props.selected == "true" ? "3px" : "0px"};
 
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 8px rgba(225, 95, 237, 1.0);
   border-radius: 10px;
+  border-style: solid;
+  border-width: ${props => props.selected == true ? "4px" : "0px"};
+  border-color: #06FF00;
 
   display: flex;
   flex-direction: column;
@@ -221,11 +231,7 @@ const BoxItem = styled.div`
   }
 
   &:hover {
-    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
-  }
-
-  &:active {
-    box-shadow: 3px 3px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 20px rgba(225, 95, 237, 1);
   }
 `;
 

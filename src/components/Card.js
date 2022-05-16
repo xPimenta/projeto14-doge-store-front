@@ -12,6 +12,16 @@ export default function Card() {
 
   const [card, setCard] = useState([]);
 
+  const token = localStorage.getItem("token")
+  console.log(token)
+  if (!token) {
+    navigate("/sign-in")
+  }
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
+
   useEffect(() => {
     const promise = axios.get(URL);
 
@@ -25,10 +35,7 @@ export default function Card() {
 
   function handleClick(card) {
     const URLCartPost = `${process.env.REACT_APP_API_URL}/cart-post`;
-    const promise = axios.post(URLCartPost, {
-      localToken: localStorage.token,
-      card: card,
-    });
+    const promise = axios.post(URLCartPost, {card: card}, config);
     promise.catch((e) => {
       alert("Algo deu errado");
       console.log(e);
@@ -43,9 +50,10 @@ export default function Card() {
   return (
     <ShowcasePage>
       <Header>
-        <HeaderContent>
+      <HeaderContent>
           <img src={Logo} alt="Logotipo" />
-          <ion-icon name="cart-outline"></ion-icon>
+          <Link to="/showcase"><h2> DOGE STORE </h2></Link>
+          <Link to="/cart"><ion-icon name="cart-outline" link></ion-icon></Link>
         </HeaderContent>
       </Header>
 
@@ -99,15 +107,18 @@ const HeaderContent = styled.header`
   width: 95%;
 
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 
   img {
     width: 30px;
     height: 30px;
+    margin-top: 16px;
   }
 
   ion-icon {
     font-size: 30px;
+    margin-top: 16px;
   }
 `;
 

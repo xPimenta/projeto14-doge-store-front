@@ -1,7 +1,7 @@
 import axios from "axios";
 import { React, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import Cart from "../shopping-cart.png";
 import Logo from "../dogecoin-miner-game.png";
@@ -30,13 +30,16 @@ export default function ProductsForSale() {
   return (
     <ShowcasePage>
       <Header>
-        <HeaderContent>
+      <HeaderContent>
           <img src={Logo} alt="Logotipo" />
-          <ion-icon name="cart-outline"></ion-icon>
+          <Link to="/showcase"><h2> DOGE STORE </h2></Link>
+          <Link to="/cart"><ion-icon name="cart-outline" link></ion-icon></Link>
         </HeaderContent>
       </Header>
 
       <Panel>
+      <h1> NFTs disponíveis </h1>
+      <CardsOwned>
         {products.map(card => (
                     <>
                         {card.isAvailable === true && (
@@ -49,10 +52,8 @@ export default function ProductsForSale() {
                         )}
                     </>
                 ))}
-{/* 
-                         <BoxItem onClick={(e) => handleClick(e)}>
-                            <img src={Logo} alt="doidera" />
-                         </BoxItem> */}
+                </CardsOwned>
+
 
 
       </Panel>
@@ -91,15 +92,18 @@ const HeaderContent = styled.header`
   width: 95%;
 
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 
   img {
     width: 30px;
     height: 30px;
+    margin-top: 16px;
   }
 
   ion-icon {
     font-size: 30px;
+    margin-top: 16px;
   }
 `;
 
@@ -111,6 +115,24 @@ const Panel = styled.main`
   margin-top: 20px;
 
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 30px 20px;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+`;
+const CardsOwned = styled.div`
+  margin: 0 auto;
+  margin-top: -20px;
+
+  display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 
   gap: 30px 20px;
