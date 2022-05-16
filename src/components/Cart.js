@@ -13,6 +13,7 @@ export default function Cart() {
   const [cardsOwned, setCardsOwned] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   console.log(selectedCards);
+  
 
    // GET ITEMS OWNED
    useEffect(() => {
