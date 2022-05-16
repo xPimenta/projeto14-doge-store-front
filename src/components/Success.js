@@ -2,11 +2,17 @@ import { React, useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function Success(){
     const { user } = useContext(UserContext);
     const { name, email, purchasedData } = user;
     const { address, cep } = purchasedData;
+
+    const navigate = useNavigate();
+    setInterval(() => {
+        navigate("/cart");
+    }, 5000);
 
     return(
         <SuccessContent>
@@ -21,6 +27,7 @@ export default function Success(){
             </BuyerContent>
         </SuccessContent>
     );
+
 }
 
 /* ------------------- Estilização ------------------- */

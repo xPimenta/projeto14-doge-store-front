@@ -65,6 +65,8 @@ export default function Cart() {
     });
     promise.then(() => {
       console.log("Compra realizada com sucesso");
+      navigate("/checkout");
+
     });
   });
 
