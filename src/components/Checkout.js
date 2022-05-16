@@ -1,7 +1,10 @@
 import axios from "axios";
-import { React, useState, useEffect } from "react";
-import styled from "styled-components";
+import { React, useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
+import UserContext from "../contexts/UserContext";
+
+import styled from "styled-components";
 import Logo from "../dogecoin-miner-game.png";
 
 export default function Checkout(){
@@ -10,6 +13,8 @@ export default function Checkout(){
     const [address, setAddress] = useState("");
     const [cep, setCep] = useState("");
     const [cardNumber, setCardNumber] = useState("");
+    const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     function handleCheckOut(e){
         e.preventDefault();
@@ -39,7 +44,8 @@ export default function Checkout(){
             cardNumber
         });
         promise.then(response => {
-            console.log(response.data)
+            setUser(response.data);
+            navigate("/success");
         });
         promise.catch(error => {
             console.log(error.response)
@@ -108,7 +114,6 @@ export default function Checkout(){
 const CheckoutPage = styled.div`
   width: 100%;
   padding-bottom: 50px;
-  background-color: royalblue;
 `;
 
 const Header = styled.header`
@@ -120,10 +125,14 @@ const Header = styled.header`
   align-items: center;
 
   background-color:#E15FED;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 
   img {
     width: 30px;
     height: 30px;
+
+    border-radius: 10px;
   }
 `;
 
@@ -144,7 +153,6 @@ const HeaderContent = styled.header`
 `;
 
 const DataInputCheckout = styled.div`
-    background-color: orange;
     width: 90%;
 
     margin: 0 auto;
