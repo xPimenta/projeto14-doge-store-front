@@ -6,8 +6,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Logo from "../dogecoin-miner-game.png";
 
 export default function Cart() {
-  const URLCart = `${process.env.REACT_APP_API_URL}/cart-get`;
-  const URLCardsOwned = `${process.env.REACT_APP_API_URL}/cart-owned`;
+  const URLCart = `http://localhost:5100/cart-get`;
+  const URLCardsOwned = `http://localhost:5100/cart-owned`;
 
   const [cartItems, setCartItems] = useState([]);
   const [cardsOwned, setCardsOwned] = useState([]);
@@ -57,7 +57,7 @@ export default function Cart() {
   function comprarCards() {
 
     selectedCards.forEach(card => {
-    const URLBuyCards = `${process.env.REACT_APP_API_URL}/cart-buy`;
+    const URLBuyCards = `http://localhost:5100/cart-buy`;
     const promise = axios.post(URLBuyCards, {cards: card}, config);
     promise.catch((e) => {
       alert("Algo deu errado");

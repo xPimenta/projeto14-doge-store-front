@@ -8,7 +8,7 @@ import Logo from "../dogecoin-miner-game.png";
 
 export default function Card() {
   const { idCard } = useParams();
-  const URL = `${process.env.REACT_APP_API_URL}/card/${idCard}`;
+  const URL = `http://localhost:5100/card/${idCard}`;
 
   const [card, setCard] = useState([]);
 
@@ -34,7 +34,7 @@ export default function Card() {
   let navigate = useNavigate();
 
   function handleClick(card) {
-    const URLCartPost = `${process.env.REACT_APP_API_URL}/cart-post`;
+    const URLCartPost = `http://localhost:5100/cart-post`;
     const promise = axios.post(URLCartPost, {card: card}, config);
     promise.catch((e) => {
       alert("Algo deu errado");

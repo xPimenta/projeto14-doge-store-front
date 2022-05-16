@@ -8,7 +8,7 @@ import Logo from "../dogecoin-miner-game.png";
 
 export default function ProductsForSale() {
 
-  const URL = `${process.env.REACT_APP_API_URL}/products`;
+  const URL = `http://localhost:5100/products`;
 
   const [products, setProducts] = useState([]);
     

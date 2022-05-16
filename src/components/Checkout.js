@@ -36,7 +36,7 @@ export default function Checkout(){
             return;
         }
 
-        const promise = axios.post(`${process.env.REACT_APP_API_URL}/checkout`, {
+        const promise = axios.post(`http://localhost:5100/checkout`, {
             email,
             cpf,
             address,

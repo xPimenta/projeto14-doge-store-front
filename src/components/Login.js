@@ -7,7 +7,7 @@ import Logo1 from "../dogecoin-miner-game.png"
 
 export default function Login(){
 
-    const URL = `${process.env.REACT_APP_API_URL}/sign-in`
+    const URL = `http://localhost:5100/sign-in`
 
     const navigate = useNavigate()
     const [userLogin, setUserLogin] = useState({email: "", password: ""})
