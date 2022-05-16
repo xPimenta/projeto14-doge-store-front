@@ -25,14 +25,17 @@ export default function Card() {
 
   function handleClick(card) {
     const URLCartPost = `${process.env.REACT_APP_API_URL}/cart-post`;
-    const promise = axios.post(URLCartPost, { user: localStorage.name, card: card });
-        promise.catch((e) => {
-            alert("Algo deu errado")
-            console.log(e)
-        })
-        promise.then(() => {
-            navigate("/cart")
-        })
+    const promise = axios.post(URLCartPost, {
+      localToken: localStorage.token,
+      card: card,
+    });
+    promise.catch((e) => {
+      alert("Algo deu errado");
+      console.log(e);
+    });
+    promise.then(() => {
+      navigate("/cart");
+    });
     // console.log(localStorage.name)
     // console.log(card)
   }

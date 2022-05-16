@@ -16,30 +16,26 @@ export default function Cart() {
 
    // GET ITEMS OWNED
    useEffect(() => {
-    console.log(localStorage.name);
     const promise = axios.get(URLCardsOwned, {
       params: {
-        user: localStorage.name,
+        localToken: localStorage.token,
       },
     });
     promise.then((response) => {
       setCardsOwned(response.data);
-      console.log("cardsOwned", response.data);
     });
     promise.catch((error) => console.log(error));
   }, []);
 
   // GET ITEMS IN CART
   useEffect(() => {
-    console.log(localStorage.name);
     const promise = axios.get(URLCart, {
       params: {
-        user: localStorage.name,
+        localToken: localStorage.token,
       },
     });
     promise.then((response) => {
       setCartItems(response.data);
-      console.log("cartItems", response.data);
     });
     promise.catch((error) => console.log(error));
   }, []);
@@ -57,7 +53,7 @@ export default function Cart() {
     selectedCards.forEach(card => {
     const URLBuyCards = `${process.env.REACT_APP_API_URL}/cart-buy`;
     const promise = axios.post(URLBuyCards, {
-      user: localStorage.name,
+      localToken: localStorage.token,
       cards: card,
     });
     promise.catch((e) => {
