@@ -8,7 +8,7 @@ import Logo from "../dogecoin-miner-game.png";
 
 export default function ProductsForSale() {
 
-  const URL = `https://doge-store.herokuapp.com/products`;
+  const URL = `${process.env.REACT_APP_API_URL}/products`;
 
   const [products, setProducts] = useState([]);
     
